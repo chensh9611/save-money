@@ -1,5 +1,5 @@
 
-const clone=(data: any)=>{
+function clone<x>(data: x){
   return JSON.parse(JSON.stringify(data))
 
 }

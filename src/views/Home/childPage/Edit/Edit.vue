@@ -66,10 +66,11 @@ export default class Edit extends Money {
   remove(id: string, category: string) {
     Dialog.confirm({
       title: '删除类别',
-      message: '您确定要删除该类别吗？',
+      message: '删除类别同时会删除该类别下的所有记账',
     })
         .then(() => {
           this.$store.commit('removeTag', {id, category})
+          this.$store.commit('removeRecord',{id})
           Toast('删除成功');
           this.$router.go(0)
         })

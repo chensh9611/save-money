@@ -4,6 +4,7 @@ import createId from '@/lib/createId';
 import clone from '@/lib/clone';
 import router from '@/router';
 import { Dialog,Toast,Notify } from 'vant';
+import dayjs from 'dayjs';
 
 Vue.use(Vuex);
 
@@ -14,6 +15,17 @@ const store = new Vuex.Store({
     category: JSON.parse(window.localStorage.getItem('category') || '"-"'),
   } as RootState,
   getters: {
+    //Detail
+    years(state){
+      const endYear = dayjs().year();
+      let year = 1970;
+      const result: number[] = [];
+      while (year <= endYear){
+        result.push(year)
+        year++
+      }
+      return result
+    },
     Category(state) {
       return state.category;
     },
@@ -28,8 +40,20 @@ const store = new Vuex.Store({
     findTag: (state) => (id: string) => {
       return state.tagList.filter(t => t.id === id)[0];
     },
+    getItemIcon: (state) => (id: string) => {
+      const tag = state.tagList.filter(tag => tag.id === id)[0];
+      return tag ? tag.iconName : 'addTag';
+    },
+    getTagName: (state) =>(id: string) =>{
+      const tag = state.tagList.filter(tag =>tag.id === id)[0]
+      return tag ? tag.name: ''
+    },
   },
   mutations: {
+    //Detail
+
+
+    //Category
     fetchCategory(state) {
       state.category = JSON.parse(window.localStorage.getItem('category') || '"-"');
       store.commit('saveCategory');
@@ -42,6 +66,17 @@ const store = new Vuex.Store({
       window.localStorage.setItem('category', JSON.stringify(state.category));
     },
     //Record
+    removeRecord(state,id: string){
+      let index = -1
+      for (let i = 0; i<state.recordList.length; i++){
+        if (state.recordList[i].tagIds[0] === id){
+          index = i
+          break
+        }
+      }
+      state.recordList.splice(index,1)
+      store.commit('saveRecordList')
+    },
     saveRecordList(state) {
       window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
     },
@@ -64,7 +99,7 @@ const store = new Vuex.Store({
       Dialog.alert({
         message: '操作成功！',
       }).then(() => {
-        router.go(0);
+        router.go(-1);
       });
     },
 
@@ -105,6 +140,8 @@ const store = new Vuex.Store({
       store.commit('saveTagList');
       state.category = category;
       store.commit('saveCategory');
+      store.commit('fetchRecordList');
+      store.commit('fetchTagList');
     },
     createTag(state, payload: Payload) {
       const {name, iconName, mold} = payload;
