@@ -1,5 +1,8 @@
 const path = require('path')
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/save-money/'
+    : '/',
   lintOnSave: false,
   devServer: {
     host: '0.0.0.0',
