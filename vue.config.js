@@ -1,7 +1,21 @@
 const path = require('path')
+//less文件的路径
+
 module.exports = {
+  css: {
+    loaderOptions: {
+      less: {
+        lessOptions: {
+          modifyVars: {
+            hack: `true; @import "src/less/vantChange.less";`
+          }
+        }
+      },
+    }
+  },
+
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/save-money/'
+    ? '/save-money-website/'
     : '/',
   lintOnSave: false,
   devServer: {

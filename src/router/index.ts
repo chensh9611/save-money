@@ -6,6 +6,7 @@ import Money from '@/views/Home/childPage/Money/Money.vue';
 import EditTag from '@/views/Home/childPage/Edit/EditTag.vue';
 import Edit from '@/views/Home/childPage/Edit/Edit.vue';
 import Detail from '@/views/Detail.vue';
+import Statistics from '@/views/Statistics/Statistics.vue';
 
 
 Vue.use(VueRouter);
@@ -35,6 +36,11 @@ const routes: Array<RouteConfig> = [
     path: '/detail',
     name: 'Detail',
     component: Detail
+  },
+  {
+    path: '/statistics',
+    name: 'Statistics',
+    component: Statistics
   },
   {
     path: '*',

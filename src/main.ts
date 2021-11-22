@@ -7,6 +7,7 @@ import Icon from '@/components/common/Icon.vue';
 import Layout from '@/components/common/Layout.vue';
 import Vant from 'vant';
 import 'vant/lib/index.css';
+import 'vant/lib/index.less';
 
 Vue.use(Vant);
 Vue.config.productionTip = false
