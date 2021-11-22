@@ -3,8 +3,10 @@ import Vuex from 'vuex';
 import createId from '@/lib/createId';
 import clone from '@/lib/clone';
 import router from '@/router';
-import { Dialog,Toast,Notify } from 'vant';
+import {Dialog, Toast, Notify} from 'vant';
 import dayjs from 'dayjs';
+import day from 'dayjs';
+import {iteratee} from 'lodash';
 
 Vue.use(Vuex);
 
@@ -15,16 +17,35 @@ const store = new Vuex.Store({
     category: JSON.parse(window.localStorage.getItem('category') || '"-"'),
   } as RootState,
   getters: {
+    //Home
+    //获取支出的类别
+    expenses: (state) => {
+      return state.recordList.filter(item => item.category === '-');
+    },
+    //获取收的类别
+    income(state) {
+      return state.recordList.filter(item => item.category === '+');
+    },
+    expensesMoney: () => (today: string) => {
+      const mouthExpenses = (store.getters.expenses as RecordItem[])
+        .filter(item => day(item.createAt).format('DD') === today);
+      return mouthExpenses.map(item => item.amount);
+    },
+    incomeMoney: () => (month: string) => {
+      const mouthIncome = (store.getters.income as RecordItem[])
+        .filter(item => day(item.createAt).format('MM') === month);
+      return mouthIncome.map(item => item.amount);
+    },
     //Detail
-    years(state){
+    years(state) {
       const endYear = dayjs().year();
       let year = 1970;
       const result: number[] = [];
-      while (year <= endYear){
-        result.push(year)
-        year++
+      while (year <= endYear) {
+        result.push(year);
+        year++;
       }
-      return result
+      return result;
     },
     Category(state) {
       return state.category;
@@ -44,9 +65,9 @@ const store = new Vuex.Store({
       const tag = state.tagList.filter(tag => tag.id === id)[0];
       return tag ? tag.iconName : 'addTag';
     },
-    getTagName: (state) =>(id: string) =>{
-      const tag = state.tagList.filter(tag =>tag.id === id)[0]
-      return tag ? tag.name: ''
+    getTagName: (state) => (id: string) => {
+      const tag = state.tagList.filter(tag => tag.id === id)[0];
+      return tag ? tag.name : '';
     },
   },
   mutations: {
@@ -66,16 +87,16 @@ const store = new Vuex.Store({
       window.localStorage.setItem('category', JSON.stringify(state.category));
     },
     //Record
-    removeRecord(state,id: string){
-      let index = -1
-      for (let i = 0; i<state.recordList.length; i++){
-        if (state.recordList[i].tagIds[0] === id){
-          index = i
-          break
+    removeRecord(state, id: string) {
+      let index = -1;
+      for (let i = 0; i < state.recordList.length; i++) {
+        if (state.recordList[i].tagIds[0] === id) {
+          index = i;
+          break;
         }
       }
-      state.recordList.splice(index,1)
-      store.commit('saveRecordList')
+      state.recordList.splice(index, 1);
+      store.commit('saveRecordList');
     },
     saveRecordList(state) {
       window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
@@ -86,11 +107,11 @@ const store = new Vuex.Store({
     },
     createRecord(state, record: RecordItem) {
       if (record.tagIds.length === 0) {
-        Notify({ type: 'warning', message: '未选择类别！' });
+        Notify({type: 'warning', message: '未选择类别！'});
         return;
       }
       if (record.amount <= 0) {
-        Notify({ type: 'warning', message: '请输入金额！' });
+        Notify({type: 'warning', message: '请输入金额！'});
         return;
       }
       const newRecord: RecordItem = clone(record);
@@ -106,18 +127,18 @@ const store = new Vuex.Store({
     //Tag
     updateTag(state, payload: Payload) {
       const {id, name, iconName, mold} = payload;
-      const names = state.tagList.map(item => item.name)
-      if (names.indexOf(name)<0){
-        console.log('csh')
+      const names = state.tagList.map(item => item.name);
+      if (names.indexOf(name) < 0) {
+        console.log('csh');
         const newTags = state.tagList.map(tag => tag.id === id ? {id, name, iconName, mold} : tag);
         state.tagList = [...newTags];
         store.commit('saveTagList');
         Toast({
           message: '保存成功',
           icon: 'success',
-        })
-        router.go(-1)
-      }else {
+        });
+        router.go(-1);
+      } else {
         Dialog.alert({
           title: '编辑类别',
           message: '类别不能重复添加',
