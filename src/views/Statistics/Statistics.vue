@@ -8,7 +8,7 @@
     </header>
     <div class="chart">
       <div class="caption">
-        <span v-if="interval === 'week'">本周</span>
+        <span v-if="interval === 'isoWeek'">本周</span>
         <span v-else-if="interval === 'moth'">本月</span>
         <span v-else>今年</span>
       </div>
@@ -61,7 +61,7 @@ Vue.use(DropdownItem);
 })
 export default class Statistics extends Vue {
   intervalList = [
-    {text: '周', value: 'week'},
+    {text: '周', value: 'isoWeek'},
     {text: '月', value: 'moth'},
     {text: '年', value: 'year'},
   ];
