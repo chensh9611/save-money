@@ -2,6 +2,10 @@ const path = require('path')
 //less文件的路径
 
 module.exports = {
+  transpileDependencies: [
+    'vue-echarts',
+    'resize-detector'
+  ],
   css: {
     loaderOptions: {
       less: {
@@ -13,7 +17,6 @@ module.exports = {
       },
     }
   },
-
   publicPath: process.env.NODE_ENV === 'production'
     ? '/save-money-website/'
     : '/',

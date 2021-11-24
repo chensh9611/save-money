@@ -28,15 +28,12 @@
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 import generateOutput from '@/lib/generateOutput';
-import {number} from 'echarts';
-
 @Component
 export default class NumberPadSection extends Vue {
   @Prop(Number) amount!: number;
   output = this.amount.toString();
   text = '';
   longLock = false;
-  timeOutEvent = 0;
   touchstart(event: MouseEvent) {
     this.text = ((event.target as HTMLButtonElement).textContent!.trim() as string);
     this.longLock = true;

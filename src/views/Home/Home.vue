@@ -16,28 +16,37 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
 import ShowMoney from '@/components/common/ShowMoney.vue';
 import TopNav from '@/components/common/TopNav.vue';
 import Layout from '@/components/common/Layout.vue';
 import MoneyKey from '@/components/common/MoneyKey.vue';
 import day from 'dayjs';
+
 @Component({
   components: {MoneyKey, Layout, TopNav, ShowMoney}
 })
 export default class Home extends Vue {
 
-  get expenses(){
+  get expenses() {
     const today = day(new Date()).format('DD');
-    return(this.$store.getters.expensesMoney(today) as number[]).reduce((preMoney,amount) =>{
-      return preMoney += amount;
-    },0)
+    return (this.$store.getters.expensesMoney(today) as number[]).reduce((preMoney, amount) => {
+      preMoney = preMoney + amount;
+      return preMoney;
+    }, 0);
   }
-  get income(){
+
+  get income() {
     const mouth = day(new Date()).format('MM');
-return (this.$store.getters.incomeMoney(mouth) as number[]).reduce((preMoney,amount) => {
-  return preMoney +=amount
-},0)
+    return (this.$store.getters.incomeMoney(mouth) as number[]).reduce((preMoney, amount) => {
+      preMoney = preMoney + amount;
+      return preMoney;
+    }, 0);
+  }
+
+  created() {
+    this.$store.state.category = '-';
+    this.$store.commit('saveCategory');
   }
 }
 </script>
