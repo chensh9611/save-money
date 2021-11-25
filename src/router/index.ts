@@ -5,8 +5,9 @@ import NotFound from '@/views/NotFound/NotFound.vue';
 import Money from '@/views/Home/childPage/Money/Money.vue';
 import EditTag from '@/views/Home/childPage/Edit/EditTag.vue';
 import Edit from '@/views/Home/childPage/Edit/Edit.vue';
-import Detail from '@/views/Detail.vue';
+import Detail from '@/views/Detail/Detail.vue';
 import Statistics from '@/views/Statistics/Statistics.vue';
+import EditRecord from '@/views/Detail/EditRecord.vue';
 
 
 Vue.use(VueRouter);
@@ -36,6 +37,11 @@ const routes: Array<RouteConfig> = [
     path: '/detail',
     name: 'Detail',
     component: Detail
+  },
+  {
+    path: '/detail/record-edit/:id',
+    name: 'EditRecord',
+    component: EditRecord
   },
   {
     path: '/statistics',

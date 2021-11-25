@@ -23,7 +23,7 @@ module.exports = {
   lintOnSave: false,
   devServer: {
     host: '0.0.0.0',
-    public: '192.168.1.8:8080',
+    public: '192.168.1.5:8080',
   },
   chainWebpack: config => {
     const dir = path.resolve(__dirname, 'src/assets/icons')

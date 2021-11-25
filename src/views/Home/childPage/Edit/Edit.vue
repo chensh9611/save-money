@@ -70,7 +70,7 @@ export default class Edit extends Money {
     })
         .then(() => {
           this.$store.commit('removeTag', {id, category})
-          this.$store.commit('removeRecord',{id})
+          this.$store.commit('removeRecord',id)
           Toast('删除成功');
           this.$router.go(0)
         })

@@ -6,7 +6,6 @@ import router from '@/router';
 import {Dialog, Toast, Notify} from 'vant';
 import dayjs from 'dayjs';
 import day from 'dayjs';
-import {iteratee} from 'lodash';
 
 Vue.use(Vuex);
 
@@ -15,6 +14,7 @@ const store = new Vuex.Store({
     recordList: [],
     tagList: [],
     category: JSON.parse(window.localStorage.getItem('category') || '"-"'),
+    currentRecord: undefined,
   } as RootState,
   getters: {
     //Home
@@ -37,6 +37,7 @@ const store = new Vuex.Store({
       return mouthIncome.map(item => item.amount);
     },
     //Detail
+
     years(state) {
       const endYear = dayjs().year();
       let year = 1970;
@@ -88,15 +89,21 @@ const store = new Vuex.Store({
     },
     //Record
     removeRecord(state, id: string) {
-      let index = -1;
-      for (let i = 0; i < state.recordList.length; i++) {
+      for (let i = 0; i <= state.recordList.length; i++) {
         if (state.recordList[i].tagIds[0] === id) {
-          index = i;
-          break;
+          console.log('相同的ID：'+i)
+          state.recordList.splice(i,1)
+          //当recordList里面只有两条相同的tagId时，需要判断下recordList的长度再强制删除
+          if (state.recordList.length===1){
+            state.recordList.splice(i,1)
+          }
+          console.log('删了：'+i)
+          store.commit('saveRecordList');
+          console.log('长度：'+state.recordList.length)
+        }else {
+          console.log('i:'+i)
         }
       }
-      state.recordList.splice(index, 1);
-      store.commit('saveRecordList');
     },
     saveRecordList(state) {
       window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
@@ -104,6 +111,13 @@ const store = new Vuex.Store({
     fetchRecordList(state) {
       state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
       store.commit('saveRecordList');
+    },
+    findRecord(state,id: number){
+      state.currentRecord = undefined
+      const record = state.recordList.filter(item => parseInt(item.id)   === id)[0];
+      if (record){
+        state.currentRecord = record
+      }
     },
     createRecord(state, record: RecordItem) {
       if (record.tagIds.length === 0) {
@@ -117,11 +131,14 @@ const store = new Vuex.Store({
       const newRecord: RecordItem = clone(record);
       state.recordList.push(newRecord);
       store.commit('saveRecordList');
-      Dialog.alert({
-        message: '操作成功！',
+      Dialog.confirm({
+        message: '操作成功！是否继续记账？',
       }).then(() => {
-        router.go(-1);
-      });
+        router.go(0);
+      })
+        .catch(() =>{
+          router.go(-1)
+        })
     },
 
     //Tag

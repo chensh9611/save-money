@@ -5,6 +5,7 @@ type Tag = {
   mold: string;
 }
 type RecordItem = {
+  id: string;
   tagIds: string[];
   notes: string;
   createAt: string;
@@ -15,6 +16,7 @@ type RootState = {
   recordList: RecordItem[];
   tagList: Tag[];
   category: string;
+  currentRecord: RecordItem | undefined;
 }
 type Payload = {
   id?: string;

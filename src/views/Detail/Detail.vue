@@ -51,7 +51,7 @@
               class="item"
               v-for="(item, index) in group.items"
               :key="index"
-              :to="`/record/edit/${item.id}`"
+              :to="`/detail/record-edit/${item.id}`"
           >
             <div class="tag">
               <span>
@@ -73,7 +73,6 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component, Watch } from "vue-property-decorator";
-
 import dayjs from "dayjs";
 import clone from "@/lib/clone";
 import Layout from '@/components/common/Layout.vue';
@@ -88,7 +87,7 @@ type Group = {
 @Component({
   components: {TopNav, Icon, Layout },
 })
-export default class Bill extends Vue {
+export default class Detail extends Vue {
   year =
       window.sessionStorage.getItem("year") ||
       dayjs()
@@ -103,11 +102,11 @@ export default class Bill extends Vue {
   }
   get years() {
     const endYear = dayjs().year();
-    let y = 1970;
+    let year = 1970;
     const result: number[] = [];
-    while (y <= endYear) {
-      result.push(y);
-      y++;
+    while (year <= endYear) {
+      result.push(year);
+      year++;
     }
     return result;
   }
@@ -166,8 +165,6 @@ export default class Bill extends Vue {
       for (record of group.items) {
         if (record.category === "+") {
           total += record.amount;
-        } else {
-          continue;
         }
       }
     }
@@ -182,8 +179,6 @@ export default class Bill extends Vue {
       for (record of group.items) {
         if (record.category === "-") {
           total += record.amount;
-        } else {
-          continue;
         }
       }
     }
@@ -374,6 +369,7 @@ export default class Bill extends Vue {
 
 .record {
   margin-top: 121px;
+  margin-bottom: 48px;
   > li {
     .title {
       font-size: 12px;
