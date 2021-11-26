@@ -88,18 +88,34 @@ const store = new Vuex.Store({
       window.localStorage.setItem('category', JSON.stringify(state.category));
     },
     //Record
-    removeRecord(state, id: string) {
+    updateRecord(state, payload: {id: string; record: RecordItem}){
+      const {id,record} = payload;
+      let i = 0;
+      for (i = 0; i< state.recordList.length; i++){
+        if (state.recordList[i].id === id){
+          state.recordList[i] = record
+          break
+        }
+      }
+      store.commit('saveRecordList')
+    },
+    removeRecord(state,id: string){
+      for (let i = 0; i<state.recordList.length; i++){
+        if (state.recordList[i].id === id){
+          state.recordList.splice(i,1)
+          store.commit('saveRecordList')
+        }
+      }
+    },
+    removeRecords(state, id: string) {
       for (let i = 0; i <= state.recordList.length; i++) {
         if (state.recordList[i].tagIds[0] === id) {
-          console.log('相同的ID：'+i)
           state.recordList.splice(i,1)
           //当recordList里面只有两条相同的tagId时，需要判断下recordList的长度再强制删除
           if (state.recordList.length===1){
             state.recordList.splice(i,1)
           }
-          console.log('删了：'+i)
           store.commit('saveRecordList');
-          console.log('长度：'+state.recordList.length)
         }else {
           console.log('i:'+i)
         }
@@ -180,6 +196,7 @@ const store = new Vuex.Store({
       store.commit('saveCategory');
       store.commit('fetchRecordList');
       store.commit('fetchTagList');
+      // router.go(0)
     },
     createTag(state, payload: Payload) {
       const {name, iconName, mold} = payload;

@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
 import TopNav from '@/components/common/TopNav.vue';
 import Types from '@/components/common/Types.vue';
 import Money from '@/views/Home/childPage/Money/Money.vue';
@@ -70,9 +70,11 @@ export default class Edit extends Money {
     })
         .then(() => {
           this.$store.commit('removeTag', {id, category})
-          this.$store.commit('removeRecord',id)
           Toast('删除成功');
           this.$router.go(0)
+          this.$store.commit('removeRecords',id)
+
+
         })
         .catch(() => {
           // on cancel

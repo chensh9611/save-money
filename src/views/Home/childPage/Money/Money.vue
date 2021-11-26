@@ -29,6 +29,7 @@ import TypeSection from '@/components/common/TypeSection.vue';
 import TagsSection from '@/views/Home/childPage/Money/TagsSection.vue';
 import Types from '@/components/common/Types.vue';
 import KeyBoardSection from '@/views/Home/childPage/Money/KeyBoardSection.vue';
+import createId from '@/lib/createId';
 
 @Component({
   components: {KeyBoardSection, Types, TagsSection, TypeSection, CategorySection, TopNav}
@@ -40,6 +41,7 @@ export default class Money extends Vue {
 
   //初始值
   selected: RecordItem = {
+    id: createId().toString(),
     tagIds: [],    //标签
     notes: '',    //备注
     category: this.$store.state.category,    //收入或支出类型
