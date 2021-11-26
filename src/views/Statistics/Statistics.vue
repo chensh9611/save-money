@@ -29,7 +29,7 @@
                 :key="index">
               <div class="tag-info">
                 <div class="icon">
-                  <Icon :iconName="item.tag"/>
+                  <Icon :iconName="item.iconName"/>
                 </div>
                 <div class="name">
                   <span class="tag-name">{{ item.tag }}</span>
@@ -74,6 +74,7 @@ import Chart from '@/components/common/Chart.vue';
 dayjs.extend(isoWeek);
 
 type Group = {
+  iconName: string;
   tag: string;
   amount: number;
   percentage: number;
@@ -165,7 +166,7 @@ export default class Statistics extends Vue {
       const index = tags.indexOf(this.$store.getters.getTagName(record.tagIds[0]));
       if (index < 0) {
         tags.push(this.$store.getters.getTagName(record.tagIds[0]));
-        result.push({tag: this.$store.getters.getTagName(record.tagIds[0]), amount: record.amount, percentage: 0});
+        result.push({iconName: this.$store.getters.getItemIcon(record.tagIds[0]),tag: this.$store.getters.getTagName(record.tagIds[0]), amount: record.amount, percentage: 0});
       } else {
         result[index].amount += record.amount;
       }
