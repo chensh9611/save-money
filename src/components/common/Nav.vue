@@ -1,27 +1,23 @@
 <template>
   <nav>
-    <router-link to="/home" class="item" active-class="selected">
-      <Icon iconName="money"/>
-      记账
-    </router-link>
     <router-link to="/detail" class="item" active-class="selected">
       <Icon iconName='details'/>
       明细
     </router-link>
-    <router-link to="statistics" class="item" active-class="selected">
-      <Icon iconName="statistics"/>
-      统计
+    <router-link to="/home" class="item" active-class="selected">
+      <Icon iconName="money"/>
+      记账
     </router-link>
-    <router-link to="other" class="item" active-class="selected">
-      <Icon iconName="other"/>
-      其他
+    <router-link to="statistics" class="item" active-class="selected">
+      <Icon iconName="统计"/>
+      统计
     </router-link>
   </nav>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
 
 @Component
 export default class Nav extends Vue {
