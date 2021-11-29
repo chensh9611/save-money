@@ -256,19 +256,22 @@ export default class Detail extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.header {
-  background: #9d81ea;
-  position: fixed;
-  width: 100%;
-  .logo {
-    img {
-      height: 40px;
-      vertical-align: top;
-      margin-top: 10px;
-      margin-left: auto;
-      margin-right: auto;
+  .header {
+    background: #9d81ea;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    @media (min-width: 600px) {
+      max-width: 520px;
+      margin: 0 auto;
+      left: 694px;
     }
-  }
+    @media (width: 768px) {
+      max-width: 520px;
+      margin: 0 auto;
+      left: 124px;
+    }
 
   .info {
     display: flex;

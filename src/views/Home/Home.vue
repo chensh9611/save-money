@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <div class="head">
+    <div class="header">
       <TopNav>
         <span slot="title">妍妍记账</span>
       </TopNav>
@@ -52,4 +52,16 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.header{
+  @media (min-width: 600px) {
+    max-width: 520px;
+    margin: 0 auto;
+    left: 694px;
+  }
+  @media (width: 768px) {
+    max-width: 520px;
+    margin: 0 auto;
+    left: 124px;
+  }
+}
 </style>

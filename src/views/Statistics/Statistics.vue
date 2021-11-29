@@ -358,6 +358,16 @@ export default class Statistics extends Vue {
     width: 100%;
     top: 0;
     left: 0;
+    @media (min-width: 600px) {
+      max-width: 520px;
+      margin: 0 auto;
+      left: 694px;
+    }
+    @media (width: 768px) {
+      max-width: 520px;
+      margin: 0 auto;
+      left: 124px;
+    }
     background-color: white;
     font-family: 'Exo 2', sans-serif;
 

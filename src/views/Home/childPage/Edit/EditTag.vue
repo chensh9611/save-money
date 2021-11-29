@@ -127,7 +127,18 @@ export default class EditTag extends Edit {
   .head {
     position: fixed;
     width: 100%;
-
+    left: 0;
+    top: 0;
+    @media (min-width: 600px) {
+      max-width: 520px;
+      margin: 0 auto;
+      left: 694px;
+    }
+    @media (width: 768px) {
+      max-width: 520px;
+      margin: 0 auto;
+      left: 124px;
+    }
     ::v-deep {
       .top {
         .title {

@@ -41,9 +41,18 @@ export default class Layout extends Vue {
     left: 0;
     background-color: white;
     font-family: 'Exo 2', sans-serif;
+    @media (min-width: 600px) {
+      max-width: 520px;
+      margin: 0 auto;
+      left: 694px;
+    }
+    @media (width: 768px) {
+      max-width: 520px;
+      margin: 0 auto;
+      left: 124px;
+    }
   }
   .main {
-
     flex: 1;
     overflow-y: auto;
 
