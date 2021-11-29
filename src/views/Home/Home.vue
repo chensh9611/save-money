@@ -11,6 +11,10 @@
       <span slot="income_slot" class="income">本月收入 ￥ {{ income }}</span>
     </ShowMoney>
     <MoneyKey/>
+    <div v-if="width> 500" class="qr-code">
+      <img src="../../assets/image/QRCode.png" alt="" style="width: 100px; height: 100px;">
+    </div>
+    <h6 v-if="width>500">手机扫码体验最佳</h6>
   </Layout>
 </template>
 
@@ -27,6 +31,7 @@ import day from 'dayjs';
   components: {MoneyKey, Layout, TopNav, ShowMoney}
 })
 export default class Home extends Vue {
+  width = document.documentElement.clientWidth
 
   get expenses() {
     const today = day(new Date()).format('DD');
@@ -83,5 +88,16 @@ export default class Home extends Vue {
     margin: 0 auto;
     left: 700px;
   }
+}
+.qr-code {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+h6{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
