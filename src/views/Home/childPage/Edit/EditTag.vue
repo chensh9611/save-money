@@ -129,7 +129,7 @@ export default class EditTag extends Edit {
     width: 100%;
     left: 0;
     top: 0;
-    @media (min-width: 600px) {
+    @media (width: 1908px) {
       max-width: 520px;
       margin: 0 auto;
       left: 694px;
@@ -138,6 +138,26 @@ export default class EditTag extends Edit {
       max-width: 520px;
       margin: 0 auto;
       left: 124px;
+    }
+    @media(width: 2560px){
+      max-width: 520px;
+      margin: 0 auto;
+      left: 1020px;
+    }
+    @media(width: 1440px){
+      max-width: 520px;
+      margin: 0 auto;
+      left: 460px;
+    }
+    @media(width: 2048px){
+      max-width: 520px;
+      margin: 0 auto;
+      left: 764px;
+    }
+    @media(width: 1920px){
+      max-width: 520px;
+      margin: 0 auto;
+      left: 700px;
     }
     ::v-deep {
       .top {
